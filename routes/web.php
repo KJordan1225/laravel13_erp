@@ -17,6 +17,10 @@ use App\Http\Controllers\Api\WarehouseSearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
 
 
 Route::get('/', function () {
@@ -72,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('warehouses', WarehouseController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::resource('vendors', VendorController::class);
+    Route::resource('departments', DepartmentController::class);
+    Route::resource('employees', EmployeeController::class);
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {
