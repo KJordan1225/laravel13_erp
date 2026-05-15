@@ -7,11 +7,13 @@ use App\Http\Controllers\Api\ProductSearchController;
 use App\Http\Controllers\Api\SalesOrderApiController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesOrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\InventoryMovementController;
+use App\Http\Controllers\Api\InventoryMovementApiController;
+use App\Http\Controllers\Api\WarehouseSearchController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -49,12 +51,20 @@ Route::middleware(['auth'])->prefix('api')->group(function () {
         ->name('api.invoices.store');
 
     Route::resource('payments', PaymentController::class);
+
+    Route::post('/inventory-movements', [InventoryMovementApiController::class, 'store'])
+        ->name('api.inventory-movements.store');
+
+    Route::get('/warehouses/search', WarehouseSearchController::class)
+        ->name('api.warehouses.search');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('sales-orders', SalesOrderController::class);
 
     Route::resource('invoices', InvoiceController::class);
+
+    Route::resource('inventory-movements', InventoryMovementController::class);
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {
