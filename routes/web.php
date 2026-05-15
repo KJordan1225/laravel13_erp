@@ -14,6 +14,10 @@ use Inertia\Inertia;
 use App\Http\Controllers\InventoryMovementController;
 use App\Http\Controllers\Api\InventoryMovementApiController;
 use App\Http\Controllers\Api\WarehouseSearchController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WarehouseController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -65,6 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('invoices', InvoiceController::class);
 
     Route::resource('inventory-movements', InventoryMovementController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('warehouses', WarehouseController::class);
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {
