@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -97,5 +98,10 @@ class Product extends Model
                     ->orWhere('brand', 'like', "%{$search}%");
             });
         });
+    }
+
+    public function salesOrderItems(): HasMany
+    {
+        return $this->hasMany(SalesOrderItem::class);
     }
 }

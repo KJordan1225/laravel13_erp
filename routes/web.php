@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\CustomerSearchController;
+use App\Http\Controllers\Api\DashboardStatsController;
+use App\Http\Controllers\Api\InvoiceApiController;
+use App\Http\Controllers\Api\ProductSearchController;
+use App\Http\Controllers\Api\SalesOrderApiController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalesOrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Api\DashboardStatsController;
-use App\Http\Controllers\Api\CustomerSearchController;
-use App\Http\Controllers\Api\ProductSearchController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -36,6 +41,20 @@ Route::middleware(['auth'])->prefix('api')->group(function () {
 
     Route::get('/products/search', ProductSearchController::class)
         ->name('api.products.search');
+
+    Route::post('/sales-orders', [SalesOrderApiController::class, 'store'])
+        ->name('api.sales-orders.store');
+
+    Route::post('/invoices', [InvoiceApiController::class, 'store'])
+        ->name('api.invoices.store');
+
+    Route::resource('payments', PaymentController::class);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('sales-orders', SalesOrderController::class);
+
+    Route::resource('invoices', InvoiceController::class);
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {
