@@ -23,6 +23,9 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 
 
 Route::get('/', function () {
@@ -90,6 +93,10 @@ Route::middleware(['auth'])->get('/test-vue-selectors', function () {
     return view('test-vue-selectors');
 });
 
-
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+});
 
 require __DIR__.'/auth.php';
