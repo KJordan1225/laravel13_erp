@@ -26,6 +26,8 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SettingController;
 
 
 Route::get('/', function () {
@@ -87,6 +89,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::resource('purchase-orders', PurchaseOrderController::class);
     Route::resource('expenses', ExpenseController::class);
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
+    Route::get('/reports/expenses', [ReportController::class, 'expenses'])->name('reports.expenses');
+    Route::get('/reports/inventory', [ReportController::class, 'inventory'])->name('reports.inventory');
+    Route::get('/reports/customer-balances', [ReportController::class, 'customerBalances'])->name('reports.customer-balances');
+    Route::get('/reports/vendor-purchases', [ReportController::class, 'vendorPurchases'])->name('reports.vendor-purchases');
+
+    Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {
