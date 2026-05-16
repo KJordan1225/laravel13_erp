@@ -21,6 +21,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\ExpenseController;
 
 
 Route::get('/', function () {
@@ -80,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('vendors', VendorController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('employees', EmployeeController::class);
+    Route::resource('purchase-orders', PurchaseOrderController::class);
+    Route::resource('expenses', ExpenseController::class);
 });
 
 Route::middleware(['auth'])->get('/test-vue-selectors', function () {

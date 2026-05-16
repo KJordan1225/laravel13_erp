@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\SalesOrder;
 use Illuminate\Http\JsonResponse;
+use App\Models\Expense;
 
 class DashboardStatsController extends Controller
 {
@@ -17,7 +18,7 @@ class DashboardStatsController extends Controller
         return response()->json([
             'stats' => [
                 'totalSales' => SalesOrder::where('status', 'completed')->sum('total'),
-                'totalExpenses' => 0,
+                'totalExpenses' => Expense::whereIn('status', ['approved', 'paid'])->sum('amount'),
                 'totalCustomers' => Customer::count(),
                 'totalProducts' => Product::count(),
                 'lowStockProducts' => Product::whereColumn('stock_quantity', '<=', 'reorder_level')->count(),
